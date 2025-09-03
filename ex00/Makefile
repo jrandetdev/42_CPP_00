@@ -4,6 +4,8 @@ DIR_BUILD	=	./build
 CXX			=	c++
 CXXFLAGS	=	-std=c++98 -Wall -Werror -Wextra -pedantic 
 LDINCLUDE	=	-I$(DIR_SRC)
+LDFLAGS		=	
+LDLIBS		=	
 
 SRCS		=	megaphone.cpp
 SRCS_NAME	=	$(basename $(SRCS))

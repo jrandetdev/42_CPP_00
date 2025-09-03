@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 		return (1);
 	}
 
-	// Build one string with all the arguments with spaces in between
+	// Build one string with all the arguments with spaces in between simply by adding
 	for (int i = 1; i < argc ; i++)
 		args += argv[i];
 
