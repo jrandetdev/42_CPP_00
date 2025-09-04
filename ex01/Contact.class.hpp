@@ -1,11 +1,16 @@
-#ifndef CONTACT_HPP
-# define CONTACT_HPP
+#ifndef CONTACT_CLASS_HPP
+# define CONTACT_CLASS_HPP
 
 #include <string>
 
+/**
+ * a constructor is a special method that is automatically
+ * calles when an object is instantiated. It is useful to
+ * instantiate members.
+ */
 class Contact{
 	public:
-		//contrcutor
+		Contact();//contrcutor
 		//destructor
 
 		std::string get_first_name(void) const;
