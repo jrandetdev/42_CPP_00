@@ -6,8 +6,12 @@
 
 class PhoneBook{
 	public:
-		Contact contact_register[8];
-	
+		PhoneBook();
+		~PhoneBook();
+		void	print_phone_register(Contact *contact_register);
+	private:
+		Contact	contact_register[8];
+		size_t	current_index;
 }	;
 
 #endif
