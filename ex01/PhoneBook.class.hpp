@@ -8,7 +8,12 @@ class PhoneBook{
 	public:
 		PhoneBook();
 		~PhoneBook();
+		
+		void	get_and_add_contact_to_phonebook(PhoneBook phonebook);
+		Contact	fill_contact_fields();
+		void	add_contact_to_register(Contact &contact);
 		void	print_phone_register(Contact *contact_register);
+		
 	private:
 		Contact	contact_register[8];
 		size_t	current_index;
