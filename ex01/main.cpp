@@ -1,7 +1,7 @@
 #include "Contact.class.hpp"
 #include "PhoneBook.class.hpp" //maybe it might not be used here.
 
-std::string	parse_and_get_user_command(void);
+void	parse_and_get_user_command(std::string &command);
 
 int main(int argc, char **argv)
 {
@@ -13,15 +13,15 @@ int main(int argc, char **argv)
 		return (1);
 	while (command != "EXIT")
 	{
-		command = parse_and_get_user_command();
+		parse_and_get_user_command(command);
+		std::cout << "command is worth " << command << std::endl;
 	}
-	
 	return (0);
 }
 
-std::string	parse_and_get_user_command(void)
+void	parse_and_get_user_command(std::string &command)
 {
-	std::string command;
+	//std::string command;
 	
 	std::cout << "Please type one of the following 3 commands:\n";
 	std::cout << "- 'ADD' (to add a contact)\n";
@@ -30,9 +30,13 @@ std::string	parse_and_get_user_command(void)
 	std::cin >> command;
 
 	while (command != "ADD" && command != "SEARCH" && command != "EXIT")
+	{
 		std::cin >> command;
-
-	return (command);
+		if (std::cin.eof())
+		{
+			std::cout << "Error: EOF detected." << std::endl;
+		}
+	}
 }
 
 void	save_new_contact(PhoneBook &phonebook)
