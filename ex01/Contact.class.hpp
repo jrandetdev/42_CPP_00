@@ -38,6 +38,6 @@ class Contact{
 		std::string darkest_secret;
 };
 
-std::string	parse_input(std::string prompt, bool is_phone_number);
+bool	parse_input(std::string prompt, bool is_phone_number, std::string &line);
 
 #endif

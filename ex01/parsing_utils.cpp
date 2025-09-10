@@ -3,14 +3,12 @@
 
 bool	validate_input(std::string &name, bool is_phone_number)
 {
-	//preliminary check to see if length is 0 or not
 	if (name.empty())
 	{
 		std::cout << "Error: Contact fields cannot be empty." << std::endl;
-		return (false); // if length is non existant exit early
+		return (false);
 	}
 
-	// prepare the iterator for the for loop
 	std::string::iterator it;
 
 	for (it = name.begin(); it != name.end(); ++it)
@@ -32,29 +30,21 @@ bool	validate_input(std::string &name, bool is_phone_number)
 	return (true);
 }
 
-std::string	parse_input(std::string prompt, bool is_phone_number)
+bool	parse_input(std::string prompt, bool is_phone_number, std::string &line)
 {
-	std::string line = "";
-
-	std::cout << prompt << std::endl;
-
-	std::cout << "inside parse input" << std::endl;
 	while (1)
 	{
+		std::cout << '\n' << prompt << std::endl;
 		getline(std::cin, line);
 		if (std::cin.eof())
 		{
-			std::cout << "Error: EOF detected, exiting program." << std::endl;
+			std::cout << RED << '\n' << "Error: EOF detected, exiting program." << RESET << std::endl;
 			break ;
 		}
-		if (validate_input(line, is_phone_number))
+		else if (validate_input(line, is_phone_number))
 		{
-			return (line);
-		}
-		else
-		{
-			std::cout << prompt << std::endl;
+			return (true);
 		}
 	}
-	return (NULL);
+	return (false);
 }

@@ -7,7 +7,7 @@ LDINCLUDE	=	-I$(DIR_SRC)
 LDFLAGS		=	
 LDLIBS		=	
 
-SRCS		=	main.cpp Contact.cpp Phonebook.cpp validate_input.cpp
+SRCS		=	main.cpp Contact.cpp PhoneBook.cpp parsing_utils.cpp  
 SRCS_NAME	=	$(basename $(SRCS))
 OBJS		=	$(addsuffix .o, $(addprefix $(DIR_BUILD)/, $(SRCS_NAME)))
 

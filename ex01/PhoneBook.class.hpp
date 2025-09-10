@@ -4,15 +4,21 @@
 #include <iostream>
 #include "Contact.class.hpp"
 
+
+#define RED     "\033[31m"      /* Red */
+#define YELLOW  "\033[33m"      /* Yellow */
+#define GREEN   "\033[32m"      /* Green */
+#define BLUE    "\033[34m"      /* Blue */
+#define RESET   "\033[0m"		/* Reset */
+
 class PhoneBook{
 	public:
 		PhoneBook();
 		~PhoneBook();
 		
-		void	get_and_add_contact_to_phonebook(PhoneBook phonebook);
-		Contact	fill_contact_fields();
-		void	add_contact_to_register(Contact &contact);
-		void	print_phone_register(Contact *contact_register);
+		bool	get_contact(Contact &temp_contact);
+		void	add_contact(Contact &contact);
+		void	print_phone_register();
 		
 	private:
 		Contact	contact_register[8];

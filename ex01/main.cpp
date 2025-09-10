@@ -1,45 +1,47 @@
-#include "Contact.class.hpp"
-#include "PhoneBook.class.hpp" //maybe it might not be used here.
+#include "PhoneBook.class.hpp"
 
 void	print_prompt(void);
-void	search_new_contact(PhoneBook &phonebook);
 
 int main(int argc, char **argv)
 {
 	(void)argv;
 	PhoneBook	phonebook;
 	std::string command;
+	Contact		temp_contact;
 
 	if (argc > 1)
 		return (1);
 
-	print_prompt();
-	while (getline(std::cin, command)) //automatically checks for eof becaude 
+	while (1)
 	{
-		if (command == "ADD")
-			phonebook.get_and_add_contact_to_phonebook(phonebook);
-		else if (command == "SEARCH")
-			search_new_contact(phonebook);
-		else if (command == "EXIT")
+		print_prompt();
+		getline(std::cin, command);
+		if (std::cin.eof())
 		{
-			std::cout << "\nEXIT: deleting all entries and shutting down program ..." << std::endl;
+			std::cout << RED << '\n' << "Error: EOF detected, exiting program.\n" << RESET << std::endl;
 			break ;
 		}
-		print_prompt();
+		if (command == "ADD")
+		{
+			if (!phonebook.get_contact(temp_contact))
+				break ;
+			phonebook.add_contact(temp_contact);
+		}
+		else if (command == "SEARCH")
+			phonebook.print_phone_register();
+		else if (command == "EXIT")
+		{
+			std::cout << "\nEXIT: deleting all entries and shutting down program ...\n" << std::endl;
+			break ;
+		}
 	}
 	return (0);
 }
 
 void	print_prompt(void)
 {
-	std::cout << "\nPlease type one of the following 3 commands:\n";
-	std::cout << "- 'ADD' (to add a contact)\n";
-	std::cout << "- 'SEARCH' (to search a contact)\n";
-	std::cout << "- 'EXIT' (to exit the program and erase all contacts)\n\n";
-}
-
-void	search_new_contact(PhoneBook &phonebook)
-{
-	(void)phonebook;
-	std::cout << "inside search contact" << std::endl;
+	std::cout << BLUE << "\nPlease type one of the following 3 commands:\n" << RESET;
+	std::cout << BLUE << "- 'ADD' (to add a contact)\n" << RESET;
+	std::cout << BLUE << "- 'SEARCH' (to search a contact)\n" << RESET;
+	std::cout << BLUE << "- 'EXIT' (to exit the program and erase all contacts)\n\n" << RESET;
 }
