@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 			phonebook.add_contact(temp_contact);
 		}
 		else if (command == "SEARCH")
-			phonebook.print_phone_register();
+			phonebook.search_contact();
 		else if (command == "EXIT")
 		{
 			std::cout << "\nEXIT: deleting all entries and shutting down program ...\n" << std::endl;

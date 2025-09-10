@@ -2,6 +2,8 @@
 # define PHONEBOOK_CLASS_HPP
 
 #include <iostream>
+#include <iomanip>
+// #include <iosfwd>
 #include "Contact.class.hpp"
 
 
@@ -18,6 +20,7 @@ class PhoneBook{
 		
 		bool	get_contact(Contact &temp_contact);
 		void	add_contact(Contact &contact);
+		void	search_contact();
 		void	print_phone_register();
 		
 	private:

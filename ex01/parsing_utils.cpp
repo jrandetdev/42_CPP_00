@@ -1,34 +1,7 @@
 #include <iostream>
 #include "PhoneBook.class.hpp"
 
-bool	validate_input(std::string &name, bool is_phone_number)
-{
-	if (name.empty())
-	{
-		std::cout << "Error: Contact fields cannot be empty." << std::endl;
-		return (false);
-	}
-
-	std::string::iterator it;
-
-	for (it = name.begin(); it != name.end(); ++it)
-	{
-		if (is_phone_number)
-		{
-			if (!isdigit(*it) && (*it != '+'))
-			{
-				std::cout << "Error: input can only contain numbers or the character '+'." << std::endl;
-				return (false);
-			}
-		}
-		else if (!isalpha(*it))
-		{
-			std::cout << "Error: input can only contain letters." << std::endl;
-			return (false);
-		}
-	}
-	return (true);
-}
+bool	validate_input(std::string &s, bool is_numeric);
 
 bool	parse_input(std::string prompt, bool is_phone_number, std::string &line)
 {
@@ -47,4 +20,33 @@ bool	parse_input(std::string prompt, bool is_phone_number, std::string &line)
 		}
 	}
 	return (false);
+}
+
+bool	validate_input(std::string &s, bool is_numeric)
+{
+	if (s.empty())
+	{
+		std::cout << RED << "\nError: Contact fields cannot be empty." << RESET << std::endl;
+		return (false);
+	}
+
+	std::string::iterator it;
+
+	for (it = s.begin(); it != s.end(); ++it)
+	{
+		if (is_numeric)
+		{
+			if (!isdigit(*it) && (*it != '+'))
+			{
+				std::cout << RED << "\nError: input can only contain numbers or the character '+'." << RESET << std::endl;
+				return (false);
+			}
+		}
+		else if (!isalpha(*it))
+		{
+			std::cout << RED << "\nError: input can only contain letters." << RESET << std::endl;
+			return (false);
+		}
+	}
+	return (true);
 }

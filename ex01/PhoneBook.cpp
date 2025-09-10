@@ -1,6 +1,6 @@
 #include "PhoneBook.class.hpp"
 
-//Constructor and destructor
+void	print_one_column(std::string s, bool is_vertical_bar);
 
 PhoneBook::PhoneBook()
 {
@@ -49,13 +49,46 @@ void	PhoneBook::add_contact(Contact &contact)
 	contact_register[adjusted_index] = contact;
 
 	this->current_index++;
-	std::cout << "\nContact succesfully added." << std::endl;
+	std::cout << GREEN << "\nContact succesfully added." << RESET << std::endl;
+}
+
+void	PhoneBook::search_contact()
+{
+	std::string input = "";
+	
+	print_phone_register();
+	std::cout << "Which contact would you like to display? (Please input the desired index from 0-9)" << std::endl;
+	while (1)
+	{
+		getline(std::cin, input);
+		if (input.length() > 1 || !isdigit(input[0]))
+		{
+			std::cout << RED << "Error: index must be a numerical value between 0 and 9\n" << RESET << std::endl;
+		}
+		std::cout << "digit is valid!" << std::endl;
+	}
 }
 
 void	PhoneBook::print_phone_register()
 {
 	for (current_index = 0; current_index < 8; current_index++)
 	{
-		std::cout << this->contact_register[current_index].get_first_name() << "|" << this->contact_register[current_index].get_last_name() << std::endl;
+		std::cout << std::setfill(' ') << std::setw(10);
+		std::cout << current_index << '|';
+		print_one_column(this->contact_register[current_index].get_first_name(), true);
+		print_one_column(this->contact_register[current_index].get_last_name(), true);
+		print_one_column(this->contact_register[current_index].get_nickname(), false);
 	}
+}
+std::string trunc(std::string str, size_t len)
+{
+	if (str.length() > len)
+		return (str.substr(0, len - 1) + ".");
+	return(str);
+}
+void	print_one_column(std::string s, bool is_vertical_bar)
+{
+	std::cout << std::setfill(' ') << std::setw(10);
+	std::cout << trunc(s, 10);
+	is_vertical_bar ? std::cout << '|' : std::cout << std::endl;
 }
