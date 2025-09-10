@@ -1,7 +1,8 @@
 #include "Contact.class.hpp"
 #include "PhoneBook.class.hpp" //maybe it might not be used here.
 
-void	parse_and_get_user_command(std::string &command);
+void	print_prompt(void);
+void	search_new_contact(PhoneBook &phonebook);
 
 int main(int argc, char **argv)
 {
@@ -11,37 +12,34 @@ int main(int argc, char **argv)
 
 	if (argc > 1)
 		return (1);
-	while (command != "EXIT")
+
+	print_prompt();
+	while (getline(std::cin, command)) //automatically checks for eof becaude 
 	{
-		parse_and_get_user_command(command);
-		std::cout << "command is worth " << command << std::endl;
+		if (command == "ADD")
+			phonebook.get_and_add_contact_to_phonebook(phonebook);
+		else if (command == "SEARCH")
+			search_new_contact(phonebook);
+		else if (command == "EXIT")
+		{
+			std::cout << "\nEXIT: deleting all entries and shutting down program ..." << std::endl;
+			break ;
+		}
+		print_prompt();
 	}
 	return (0);
 }
 
-void	parse_and_get_user_command(std::string &command)
+void	print_prompt(void)
 {
-	//std::string command;
-	
-	std::cout << "Please type one of the following 3 commands:\n";
+	std::cout << "\nPlease type one of the following 3 commands:\n";
 	std::cout << "- 'ADD' (to add a contact)\n";
 	std::cout << "- 'SEARCH' (to search a contact)\n";
 	std::cout << "- 'EXIT' (to exit the program and erase all contacts)\n\n";
-	std::cin >> command;
-
-	while (command != "ADD" && command != "SEARCH" && command != "EXIT")
-	{
-		std::cin >> command;
-		if (std::cin.eof())
-		{
-			std::cout << "Error: EOF detected." << std::endl;
-		}
-	}
 }
 
-void	save_new_contact(PhoneBook &phonebook)
+void	search_new_contact(PhoneBook &phonebook)
 {
 	(void)phonebook;
-	std::cout << "inside save new contact\n" << std::endl;
+	std::cout << "inside search contact" << std::endl;
 }
-

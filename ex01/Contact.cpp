@@ -13,7 +13,6 @@ Contact::~Contact()
 	std::cout << "Contact: Destructor called" << std::endl;
 }
 
-
 // Get and set first_name
 
 void	Contact::set_first_name(std::string s)
@@ -25,7 +24,6 @@ const std::string	&Contact::get_first_name(void) const
 {
 	return (this->first_name);
 }
-
 
 // Get and set last_name
 
