@@ -1,6 +1,7 @@
 #include "PhoneBook.hpp"
 
 bool	validateInput(std::string &s, bool is_numeric);
+static bool is_only_whitespace(const std::string &s);
 
 bool	is_valid_input(std::string prompt, bool is_phone_number, std::string &line)
 {
@@ -9,21 +10,21 @@ bool	is_valid_input(std::string prompt, bool is_phone_number, std::string &line)
 		std::cout << YELLOW << '\n' << prompt << RESET << std::endl;
 		getline(std::cin, line);
 		if (std::cin.eof())
-			break;
+		break;
 		else if (validateInput(line, is_phone_number))
-			return (true);
+		return (true);
 	}
 	return (false);
 }
 
 bool	validateInput(std::string &s, bool is_numeric)
 {
-	if (s.empty())
+	if (s.empty() || is_only_whitespace(s))
 	{
 		std::cout << RED << "\nError: Contact fields cannot be empty." << RESET << std::endl;
 		return (false);
 	}
-
+	
 	for (std::string::iterator it = s.begin(); it != s.end(); ++it)
 	{
 		if (is_numeric)
@@ -41,4 +42,14 @@ bool	validateInput(std::string &s, bool is_numeric)
 		}
 	}
 	return (true);
+}
+
+static bool is_only_whitespace(const std::string &s)
+{
+    for (std::string::const_iterator it = s.begin(); it != s.end(); ++it)
+    {
+        if (!isblank(*it))
+            return false;
+    }
+    return true;
 }

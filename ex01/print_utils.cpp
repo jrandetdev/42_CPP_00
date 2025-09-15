@@ -10,7 +10,7 @@ void	print_decorations()
 
 std::string trunc(std::string str, size_t len)
 {
-	if (str.length() > len)
+	if (str.size() > len)
 		return (str.substr(0, len - 1) + ".");
 	return(str);
 }
