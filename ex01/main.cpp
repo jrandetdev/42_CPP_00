@@ -1,47 +1,49 @@
-#include "PhoneBook.class.hpp"
+#include "PhoneBook.hpp"
 
-void	print_prompt(void);
+static void	print_instructions();
+static	bool is_valid_command(std::string command);
 
 int main(int argc, char **argv)
 {
 	(void)argv;
-	PhoneBook	phonebook;
 	std::string command;
-	Contact		temp_contact;
+	PhoneBook	phonebook;
 
 	if (argc > 1)
-		return (1);
+		std::cout << "Error: Program takes no arguments." << std::endl;
 
 	while (1)
 	{
-		print_prompt();
-		getline(std::cin, command);
 		if (std::cin.eof())
 		{
-			std::cout << RED << '\n' << "Error: EOF detected, exiting program.\n" << RESET << std::endl;
-			break ;
+			std::cout << RED << "\nError: EOF detected, quiting program.\n" << RESET << std::endl;
+			break;
 		}
-		if (command == "ADD")
+		print_instructions();
+		getline(std::cin, command);
+		if (is_valid_command(command) && command == "EXIT")
 		{
-			if (!phonebook.get_contact(temp_contact))
-				break ;
-			phonebook.add_contact(temp_contact);
+			std::cout << GREEN << "\nEXIT: deleting all entries and shutting down program ...\n" << RESET << std::endl;
+			break;
 		}
-		else if (command == "SEARCH")
-			phonebook.search_contact();
-		else if (command == "EXIT")
-		{
-			std::cout << "\nEXIT: deleting all entries and shutting down program ...\n" << std::endl;
-			break ;
-		}
+		phonebook.handle_command(command);
 	}
 	return (0);
 }
 
-void	print_prompt(void)
+static void	print_instructions()
 {
-	std::cout << BLUE << "\nPlease type one of the following 3 commands:\n" << RESET;
+
+	std::cout << BLUE << "\n                 MAIN MENU                 " << RESET << std::endl;
+	print_decorations();
+	std::cout << BLUE << "\n\nPlease type one of the following 3 commands:\n" << RESET;
 	std::cout << BLUE << "- 'ADD' (to add a contact)\n" << RESET;
 	std::cout << BLUE << "- 'SEARCH' (to search a contact)\n" << RESET;
-	std::cout << BLUE << "- 'EXIT' (to exit the program and erase all contacts)\n\n" << RESET;
+	std::cout << BLUE << "- 'EXIT' (to exit the program)\n\n" << RESET;
 }
+
+static	bool is_valid_command(std::string command)
+{
+	return (command == "ADD" || command == "SEARCH" || command == "EXIT");
+}
+

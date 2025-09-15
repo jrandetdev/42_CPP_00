@@ -1,17 +1,12 @@
-#ifndef CONTACT_CLASS_HPP
-# define CONTACT_CLASS_HPP
+#ifndef CONTACT_HPP
+# define CONTACT_HPP
 
 #include <string>
 
-/**
- * a constructor is a special method that is automatically
- * calles when an object is instantiated. It is useful to
- * instantiate members.
- */
 class Contact{
 	public:
-		Contact();//contrcutor
-		~Contact();//destructor
+		Contact();
+		~Contact();
 
 		void				set_first_name(std::string s);
 		const std::string	&get_first_name(void) const;
@@ -28,8 +23,6 @@ class Contact{
 		void				set_darkest_secret(std::string s);
 		const std::string	&get_darkest_secret(void) const;
 
-	//Encapsulation: used to make sure that sensitive data is hidden from users
-	//to access or modify the private members, we need to use get and set methods
 	private:
 		std::string first_name;
 		std::string last_name;
@@ -37,7 +30,5 @@ class Contact{
 		std::string phone_number;
 		std::string darkest_secret;
 };
-
-bool	parse_input(std::string prompt, bool is_phone_number, std::string &line);
 
 #endif

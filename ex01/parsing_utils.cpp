@@ -1,28 +1,22 @@
-#include <iostream>
-#include "PhoneBook.class.hpp"
+#include "PhoneBook.hpp"
 
-bool	validate_input(std::string &s, bool is_numeric);
+bool	validateInput(std::string &s, bool is_numeric);
 
-bool	parse_input(std::string prompt, bool is_phone_number, std::string &line)
+bool	is_valid_input(std::string prompt, bool is_phone_number, std::string &line)
 {
 	while (1)
 	{
-		std::cout << '\n' << prompt << std::endl;
+		std::cout << YELLOW << '\n' << prompt << RESET << std::endl;
 		getline(std::cin, line);
 		if (std::cin.eof())
-		{
-			std::cout << RED << '\n' << "Error: EOF detected, exiting program." << RESET << std::endl;
-			break ;
-		}
-		else if (validate_input(line, is_phone_number))
-		{
+			break;
+		else if (validateInput(line, is_phone_number))
 			return (true);
-		}
 	}
 	return (false);
 }
 
-bool	validate_input(std::string &s, bool is_numeric)
+bool	validateInput(std::string &s, bool is_numeric)
 {
 	if (s.empty())
 	{
@@ -30,9 +24,7 @@ bool	validate_input(std::string &s, bool is_numeric)
 		return (false);
 	}
 
-	std::string::iterator it;
-
-	for (it = s.begin(); it != s.end(); ++it)
+	for (std::string::iterator it = s.begin(); it != s.end(); ++it)
 	{
 		if (is_numeric)
 		{
@@ -42,9 +34,9 @@ bool	validate_input(std::string &s, bool is_numeric)
 				return (false);
 			}
 		}
-		else if (!isalpha(*it))
+		else if (!isalpha(*it) && !isspace(*it))
 		{
-			std::cout << RED << "\nError: input can only contain letters." << RESET << std::endl;
+			std::cout << RED << "\nError: input can only contain letters or spaces." << RESET << std::endl;
 			return (false);
 		}
 	}

@@ -1,94 +1,141 @@
-#include "PhoneBook.class.hpp"
-
-void	print_one_column(std::string s, bool is_vertical_bar);
+#include "PhoneBook.hpp"
 
 PhoneBook::PhoneBook()
 {
 	this->current_index = 0;
-	std::cout << GREEN << "\nPhonebook: default constructor called\n" << RESET << std::endl;
 }
 
 PhoneBook::~PhoneBook()
 {
-	std::cout << GREEN << "\nPhonebook: destructor called\n" << RESET << std::endl;
+	
 }
 
-bool	PhoneBook::get_contact(Contact &temp_contact)
+void	print_index_view(std::string category, std::string data)
 {
-	std::string	line = "";
+    std::cout << BLUE << std::left << std::setw(18) << category 
+    		<< ": " << RESET << data << std::endl;
+}
 
-	if (!parse_input("Enter first name: ", false, line))
+void	PhoneBook::print_phone_register()
+{
+	size_t	temp_index;
+	
+	std::cout << RED <<  "\n        " << HEART << ' ' << HEART << ' ' << "MY LOVELY PHONEBOOK" << ' ' << HEART << ' ' << HEART  << RESET << std::endl;
+	print_decorations();
+	std::cout << '\n';
+	for (temp_index = 0; temp_index < 8; temp_index++)
+	{
+		std::cout << std::setfill(' ') << std::setw(10);
+		std::cout << BLUE << temp_index + 1 << '|' << RESET;
+		print_one_column(this->contact_register[temp_index].get_first_name(), true);
+		print_one_column(this->contact_register[temp_index].get_last_name(), true);
+		print_one_column(this->contact_register[temp_index].get_nickname(), false);
+	}
+	print_decorations();
+}
+
+void	PhoneBook::print_contact(int	index)
+{
+	index += -1;
+
+	std::cout << "\n" << std::endl;
+	print_index_view("First name", contact_register[index].get_first_name());
+	print_index_view("Last name", contact_register[index].get_last_name());
+	print_index_view("Nickname", contact_register[index].get_nickname());
+	print_index_view("Phone number", contact_register[index].get_phone_number());
+	print_index_view("Darkest secret", contact_register[index].get_darkest_secret());
+}
+
+int	PhoneBook::contact_found_at_index(int index)
+{
+	if (contact_register[index - 1].get_first_name().empty())
 		return (false);
-	temp_contact.set_first_name(line);
+	print_contact(index);
+	return (true);
+}
 
-	if (!parse_input("Enter last name: ", false, line))
-		return (false);
-	temp_contact.set_last_name(line);
+bool	PhoneBook::searchContact()
+{
+	std::string	user_index;
 
-	if (!parse_input("Enter nickname: ", false, line))
-		return (false);
-	temp_contact.set_nickname(line);
-
-	if (!parse_input("Enter phone number: ", true, line))
-		return (false);
-	temp_contact.set_phone_number(line);
-
-	if (!parse_input("Enter darkest secret: ", false, line))
-		return (false);
-	temp_contact.set_darkest_secret(line);
-
+	while (1)
+	{
+		print_phone_register();
+		std::cout << "\n\nSelect contact number :" << std::endl;
+		getline(std::cin, user_index);
+		if (std::cin.eof())
+			return (false);
+		int index = std::atoi(user_index.c_str());
+		if (index <= 0 || index >= 9)
+		{
+			std::cout << RED << "\nIndex must be between 1 and 9\n" << RESET << std::endl;
+			continue;
+		}
+		if (contact_found_at_index(index))
+			break;
+		else
+		{
+			std::cout << RED << "\nError: No contact at the selected index." << RESET << std::endl;
+			return (false);
+		}
+	}
 	return (true);
 }
 
 void	PhoneBook::add_contact(Contact &contact)
 {
 	size_t	adjusted_index;
-
+	
 	adjusted_index = current_index % 8;
-	std::cout << "adjusted index is" << adjusted_index << std::endl;
 	contact_register[adjusted_index] = contact;
-
+	
 	this->current_index++;
 	std::cout << GREEN << "\nContact succesfully added." << RESET << std::endl;
 }
 
-void	PhoneBook::search_contact()
+bool	PhoneBook::is_valid_field_input(std::string prompt, Contact &contact, void (Contact::*set)(std::string), bool is_phone_number, std::string &line)
 {
-	std::string input = "";
-	
-	print_phone_register();
-	std::cout << "Which contact would you like to display? (Please input the desired index from 0-9)" << std::endl;
-	while (1)
+	if (is_valid_input(prompt, is_phone_number, line))
 	{
-		getline(std::cin, input);
-		if (input.length() > 1 || !isdigit(input[0]))
-		{
-			std::cout << RED << "Error: index must be a numerical value between 0 and 9\n" << RESET << std::endl;
-		}
-		std::cout << "digit is valid!" << std::endl;
+		(contact.*set)(line);
+		return (true);
 	}
+	return (false);
 }
 
-void	PhoneBook::print_phone_register()
+bool	PhoneBook::all_contact_details_are_valid(Contact &temp_contact)
 {
-	for (current_index = 0; current_index < 8; current_index++)
+	std::string	line = "";
+
+	std::cout << BLUE << "\n             CREATE NEW CONTACT             " << RESET << std::endl;
+	print_decorations();
+	std::cout << '\n';
+	if (!is_valid_field_input("Enter first name: ", temp_contact, &Contact::set_first_name, false, line))
+		return (false);
+	if (!is_valid_field_input("Enter last name: ", temp_contact, &Contact::set_last_name, false, line))
+		return (false);
+	if (!is_valid_field_input("Enter nickname: ", temp_contact, &Contact::set_nickname, false, line))
+		return (false);
+	if (!is_valid_field_input("Enter phone number: ", temp_contact, &Contact::set_phone_number, true, line))
+		return (false);
+	if (!is_valid_field_input("Enter darkest secret: ", temp_contact, &Contact::set_darkest_secret, false, line))
+		return (false);
+	return (true);
+}
+
+bool	PhoneBook::handle_command(std::string command)
+{
+	Contact	temp_contact;
+	
+	if (command == "ADD")
 	{
-		std::cout << std::setfill(' ') << std::setw(10);
-		std::cout << current_index << '|';
-		print_one_column(this->contact_register[current_index].get_first_name(), true);
-		print_one_column(this->contact_register[current_index].get_last_name(), true);
-		print_one_column(this->contact_register[current_index].get_nickname(), false);
+		if (this->all_contact_details_are_valid(temp_contact))
+			this->add_contact(temp_contact);
 	}
-}
-std::string trunc(std::string str, size_t len)
-{
-	if (str.length() > len)
-		return (str.substr(0, len - 1) + ".");
-	return(str);
-}
-void	print_one_column(std::string s, bool is_vertical_bar)
-{
-	std::cout << std::setfill(' ') << std::setw(10);
-	std::cout << trunc(s, 10);
-	is_vertical_bar ? std::cout << '|' : std::cout << std::endl;
+	else if (command == "SEARCH")
+	{
+		if (!searchContact())
+			return (false);
+	}
+	return (true);
 }
