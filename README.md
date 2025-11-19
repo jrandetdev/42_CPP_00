@@ -1,16 +1,4 @@
-# CPP Module 00 - My Learning Journey
-
-**Author:** [Your Name]  
-**Date Completed:** [Date]  
-**Status:** ✅ Completed
-
-## Introduction
-
-This is my first module in the 42 C++ curriculum. Coming from C, this module was my introduction to object-oriented programming concepts, C++ syntax, and the standard library. This README documents what I learned and how I implemented each exercise.
-
----
-
-## What I Learned
+# CPP Module 00
 
 ### Core Concepts
 
@@ -26,7 +14,7 @@ This is my first module in the 42 C++ curriculum. Coming from C, this module was
 - How namespaces prevent naming conflicts
 
 **3. Classes and Objects**
-- Difference between classes and structs (default access specifiers)
+- Difference between classes and structs (default access specifiers) (class is private and public, struct is only public).
 - Public vs private members
 - Member functions (methods) and how to call them
 - The `this` pointer
@@ -35,7 +23,7 @@ This is my first module in the 42 C++ curriculum. Coming from C, this module was
 - `std::cout` for standard output
 - `std::cin` for standard input
 - `std::cerr` for error output
-- `std::getline()` for reading full lines with spaces
+- `std::getline()` for reading full lines with spaces intead of cin which stops at whitespace delimiters
 
 **5. String Manipulation**
 - `std::string` operations: concatenation, length, indexing
@@ -68,15 +56,13 @@ std::string capitalise_string(std::string string_to_capitalise)
 ```
 
 **What I learned:**
-- How to use `std::string` for concatenation (no more `strcat`!)
+- How to use `std::string` for concatenation (no more `ft_strcat`!)
 - The `std::toupper()` function from `<cctype>`
 - Command-line argument handling in C++
 - Passing strings by value creates a copy
 
 **Challenges:**
-- Initially tried to use pointer arithmetic like in C
-- Learned that `std::string` uses `.length()` not `strlen()`
-- Had to remember C++98 doesn't have range-based for loops
+- Learning about the string class `std::string`, which uses `.length()` not `strlen()`
 
 **Testing:**
 ```bash
@@ -101,13 +87,14 @@ I created a phonebook application that stores up to 8 contacts with ADD, SEARCH,
 **Class Structure:**
 
 **Contact Class:**
+- see Contact.hpp and Contact.cpp
 - Stores individual contact information (first name, last name, nickname, phone, secret)
-- Private member variables with public getters/setters
+- Private member variables with public getters/setters (introduction to const)
 - Handles data validation and formatting
 
 **PhoneBook Class:**
 - Manages an array of 8 Contact objects
-- Tracks the current number of contacts and oldest contact index
+- Tracks the current number of contacts and oldest contact index, index set to 0 in constructor
 - Implements circular buffer behavior (overwrites oldest when full)
 - Handles display formatting with column alignment
 
@@ -138,10 +125,11 @@ std::string formatColumn(std::string str, int width)
 **What I learned:**
 - How to design classes with private data and public interfaces
 - Encapsulation principles (keeping data private)
+- Constructors and Destructors and how they behave
 - Constructor initialization lists
 - Member function implementation outside class definition
 - `std::setw()` and `<iomanip>` for formatting output
-- `std::getline()` to read input with spaces
+- `std::getline()` to read input with spaces and using the .eof() check 
 - Circular buffer implementation without dynamic allocation
 
 **Challenges:**
@@ -150,6 +138,7 @@ std::string formatColumn(std::string str, int width)
 - **Index management:** Tracking which contact to overwrite when the phonebook is full
 - **Const correctness:** Understanding when to use `const` on getter methods
 - **String truncation:** Displaying long fields with "..." at 10 characters
+- **References to strings:** Learned what references are and their alias properties, as well as the advantages of using references to avoid copying strings which is resource heavy.
 
 **Design Decisions:**
 - Separated Contact and PhoneBook into different classes for better organization
@@ -165,66 +154,6 @@ std::string formatColumn(std::string str, int width)
 # Checked column truncation with long names
 # Tested empty input handling
 ```
-
----
-
-## Exercise 02: The Job Of Your Dreams
-
-### Implementation Overview
-
-This exercise required implementing the `Account` class based on provided header and expected output.
-
-**How it works:**
-1. The `Account.hpp` header and `tests.cpp` were provided
-2. I had to implement `Account.cpp` to match the exact output in the log file
-3. Used static members to track total accounts, deposits, and withdrawals
-
-**Key Implementation Details:**
-
-```cpp
-// Static member initialization (outside class)
-int Account::_nbAccounts = 0;
-int Account::_totalAmount = 0;
-int Account::_totalNbDeposits = 0;
-int Account::_totalNbWithdrawals = 0;
-
-// Timestamp formatting
-void Account::_displayTimestamp(void)
-{
-    time_t now = time(0);
-    tm *ltm = localtime(&now);
-    std::cout << "[" << 1900 + ltm->tm_year
-              << std::setfill('0') << std::setw(2) << 1 + ltm->tm_mon
-              << std::setw(2) << ltm->tm_mday << "_"
-              << std::setw(2) << ltm->tm_hour
-              << std::setw(2) << ltm->tm_min
-              << std::setw(2) << ltm->tm_sec << "] ";
-}
-```
-
-**What I learned:**
-- **Static members:** Variables/functions that belong to the class, not individual objects
-- **Static member initialization:** Must be done outside the class definition
-- **Time formatting:** Using `<ctime>` library for timestamps
-- **Output matching:** Precise formatting matters for automated testing
-- **Reading logs:** Reverse engineering implementation from expected output
-- **Access specifiers:** When to use private vs public
-
-**Challenges:**
-- Understanding static member syntax and initialization
-- Getting timestamp format exactly right (YYYYMMDD_HHMMSS)
-- Figuring out the logic from the log file alone
-- Managing static vs instance member interactions
-- Using `std::setfill()` and `std::setw()` for zero-padding
-
-**Design Observations:**
-- Static members track class-wide state (total accounts, total amount)
-- Instance members track per-object state (individual balance, deposits)
-- Constructor increments static counters
-- Destructor decrements account count
-- Private static function for timestamp (implementation detail)
-
----
 
 ## General Learnings
 
@@ -254,51 +183,15 @@ std::cout << str << std::endl;
 
 1. **Use initialization lists in constructors** (more efficient)
 2. **Make getters const** (they don't modify the object)
-3. **Use `std::endl` instead of `\n`** (flushes buffer)
-4. **Private members with underscores** (`_variableName`)
-5. **Include guards in headers** (prevent double inclusion)
-6. **Const correctness** (use const whenever possible)
-
-### Common Mistakes I Made
-
-1. Forgetting to initialize static members outside the class
-2. Using C-style strings instead of `std::string`
-3. Not making getter functions const
-4. Forgetting the `std::` prefix (never used `using namespace std;`)
-5. Trying to use C++11 features (had to stick to C++98)
+3. **Use `std::endl` instead of `\n`** (flushes buffer) at the end of the program
+4. **Include guards in headers** (prevent double inclusion)
+5. **Const correctness** (use const whenever possible)
 
 ---
 
 ## Compilation
 
-All exercises compile with:
-```bash
-c++ -Wall -Wextra -Werror -std=c++98 [files] -o [executable]
-```
-
-**Makefile structure I used:**
-```makefile
-NAME = program
-CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
-SRCS = file1.cpp file2.cpp
-OBJS = $(SRCS:.cpp=.o)
-
-all: $(NAME)
-
-$(NAME): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
-
-clean:
-	rm -f $(OBJS)
-
-fclean: clean
-	rm -f $(NAME)
-
-re: fclean all
-
-.PHONY: all clean fclean re
-```
+use make
 
 ---
 
@@ -320,12 +213,6 @@ re: fclean all
 - ✅ Column truncation for long names
 - ✅ EXIT command → clean termination
 - ✅ Memory leaks check with valgrind
-
-**Ex02 (Account):**
-- ✅ Output matches provided log file exactly (except timestamps)
-- ✅ Static member tracking is correct
-- ✅ All member functions implemented
-- ✅ Constructor/destructor output matches
 
 **Valgrind Check:**
 ```bash
@@ -378,14 +265,3 @@ cpp00/
 │   └── tests.cpp
 └── README.md (this file)
 ```
-
----
-
-## Conclusion
-
-CPP Module 00 was a solid introduction to C++ fundamentals. I now understand the basics of OOP, classes, namespaces, and the C++ standard library. The transition from C's procedural style to C++'s object-oriented approach required a mental shift, but I can see the benefits of encapsulation and abstraction.
-
-**Grade:** [Your Grade]  
-**Time Spent:** [Approximate hours]
-
-**Ready for CPP01!** 🚀
