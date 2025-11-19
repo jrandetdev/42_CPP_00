@@ -257,28 +257,6 @@ valgrind --leak-check=full ./phonebook
 
 ---
 
-## Reflection
-
-**What surprised me:**
-- How much easier string handling is in C++ compared to C
-- The power of encapsulation and data hiding
-- Static members are actually really useful
-- C++ streams are more intuitive than printf/scanf
-
-**What was difficult:**
-- Wrapping my head around object-oriented thinking
-- Understanding when to use const
-- Getting used to the compile errors (different from C)
-- Column formatting for the phonebook table
-
-**What I want to improve:**
-- Better class design intuition
-- More comfortable with const correctness
-- Understanding when to pass by reference vs value
-- Memory management with new/delete (coming in later modules)
-
----
-
 ## Files Structure
 
 ```
