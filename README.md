@@ -98,6 +98,28 @@ I created a phonebook application that stores up to 8 contacts with ADD, SEARCH,
 - Implements circular buffer behavior (overwrites oldest when full)
 - Handles display formatting with column alignment
 
+**PhoineBook Class Implementation:**
+```cpp
+class PhoneBook{
+	public:
+		PhoneBook();
+		~PhoneBook();
+		
+	bool	handle_command(std::string command);
+	bool	all_contact_details_are_valid(Contact &temp_contact);
+	void	add_contact(Contact &contact);
+	bool	is_valid_field_input(std::string prompt, Contact &contact, void (Contact::*set)(std::string), bool is_phone_number, std::string &line);
+	bool	searchContact();
+	void	print_contact(int index);
+	int		contact_found_at_index(int index);
+	void	print_phone_register();
+
+	private:
+		Contact	contact_register[8];
+		size_t	current_index;
+}	;
+```
+
 **How it works:**
 1. Main loop reads commands from user
 2. ADD: Prompts for contact info and stores it
