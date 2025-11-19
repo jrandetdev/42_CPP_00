@@ -1,5 +1,9 @@
 #include "PhoneBook.hpp"
 
+/**
+ * @brief Construct a new Phone Book:: Phone Book object.
+ * Sets the current index in the array of contacts to 0.
+ */
 PhoneBook::PhoneBook()
 {
 	this->current_index = 0;
@@ -10,12 +14,26 @@ PhoneBook::~PhoneBook()
 	
 }
 
+/**
+ * @brief 
+ * 
+ * @param category 
+ * @param data 
+ */
 void	print_index_view(std::string category, std::string data)
 {
     std::cout << BLUE << std::left << std::setw(18) << category 
     		<< ": " << RESET << data << std::endl;
 }
 
+/**
+ * @brief displays the PhoneBook categories respecting the 10 char wide columns,
+ * pipe character separating them and the text being right alligned.
+ * 
+ * Use of the std setfill and setw functions for output from the iomanip library
+ * in C++.
+ * 
+ */
 void	PhoneBook::print_phone_register()
 {
 	size_t	temp_index;
@@ -54,6 +72,41 @@ int	PhoneBook::contact_found_at_index(int index)
 	return (true);
 }
 
+/**
+ * @brief Displays the phonebook and prompts user to select a contact by index
+ * 
+ * This function enters an interactive loop where it:
+ * 
+ * 1. Displays all stored contacts in a formatted table
+ * 
+ * 2. Prompts the user to enter a contact index (1-8)
+ * 
+ * 3. Uses std::getline() to safely read the entire line of input, which:
+ *    - Captures the full input including any spaces (preventing input buffer 
+ * 	issues where cin stops reding when it encounters a whitespace, which is its delimiter)
+ *    - Extracts and discards the newline character automatically
+ *    - Allows checking for EOF (Ctrl+D on Unix)
+ * 
+ * 4. Validates the index is within valid range (1-8)
+ * 
+ * 5. Verifies a contact exists at the specified index
+ * 
+ * The function uses getline() instead of operator>> because:
+ * 
+ * - It prevents leaving newline characters in the input buffer
+ * 
+ * - It allows proper EOF detection via std::cin.eof()
+ * 
+ * - It handles malformed input more gracefully (e.g., "3 abc" would be caught)
+ * 
+ * @return true  If a valid contact was found and displayed successfully
+ * @return false If EOF was detected (user wants to exit) or if no contact 
+ *               exists at the selected index after initial validation
+ * 
+ * @note The function loops until valid input is provided or EOF is detected
+ * @note Index validation occurs in two stages: range check (1-8) and 
+ *       existence check via contact_found_at_index()
+ */
 bool	PhoneBook::searchContact()
 {
 	std::string	user_index;
@@ -82,6 +135,13 @@ bool	PhoneBook::searchContact()
 	return (true);
 }
 
+/**
+ * @brief Add_contact function which adds the reference of the new contact object to
+ * the array of contacts in PhoneBook, and adjusts the current index in 
+ * a circular manner using the % operator. 
+ * 
+ * @param contact (reference to new contact)
+ */
 void	PhoneBook::add_contact(Contact &contact)
 {
 	size_t	adjusted_index;

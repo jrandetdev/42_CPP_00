@@ -15,6 +15,22 @@
 #define RESET   "\033[0m"		/* Reset */
 #define HEART   "\xE2\x99\xA5"	/* Heart */
 
+/**
+ * @brief Class definition for the PhoneBook object.
+ * Requirements:
+ * 
+ * - It has an array of maximum 8 contacts (private), if the user tries to add a 9th
+ * contact, the program replaces the oldest with the new one. 
+ * 
+ * - Contacts are a separate class (see Contact.hpp and Contact.cpp), so the
+ * array of contacts is an array of objects. Each object contains first name, last name,
+ * nickname, phone number, darkest secret.
+ * 
+ * - PhoneBook has member functions which allow the user to search and view individual 
+ * contact details, add a contact, or exit the phonebook (which exits the program). It
+ * implements a circular buffer behaviour with the % operator. (see PhoneBook.cpp)
+ *
+ */
 class PhoneBook{
 	public:
 		PhoneBook();

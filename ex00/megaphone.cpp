@@ -4,27 +4,43 @@
 
 std::string	capitalise_string(std::string lower_case_string);
 
+/**
+ * @brief Converts command-line arguments to uppercase and outputs them
+ * 
+ * If no arguments are provided, outputs a default loud message.
+ * Multiple arguments are concatenated together with no spaces.
+ * 
+ * Example:
+ * ./megaphone Damnit " ! " "Sorry students, I thought this thing was off."
+ * Output: DAMNIT ! SORRY STUDENTS, I THOUGHT THIS THING WAS OFF.
+ * 
+ * @param argc Argument count
+ * @param argv Argument vector
+ * @return 0 on success
+ */
 int main(int argc, char *argv[])
 {
 	std::string	args;
 
-	//check arguments
 	if (argc == 1)
 	{
 		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
 		return (1);
 	}
 
-	// Build one string with all the arguments with spaces in between simply by adding
 	for (int i = 1; i < argc ; i++)
 		args += argv[i];
 
-	// Once full string, capitalise it in the dedicated helper function
 	std::cout << capitalise_string(args) << std::endl;
 
 	return 0;
 }
 
+/**
+ * @brief Converts all characters in a string to uppercase
+ * @param string_to_capitalise The string to convert
+ * @return The uppercase version of the input string
+ */
 std::string	capitalise_string(std::string string_to_capitalise)
 {
 	for (size_t i=0; i<string_to_capitalise.length(); i++)

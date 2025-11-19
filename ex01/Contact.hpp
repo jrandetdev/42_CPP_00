@@ -32,3 +32,4 @@ class Contact{
 };
 
 #endif
+
