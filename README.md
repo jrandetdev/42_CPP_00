@@ -104,24 +104,6 @@ I created a phonebook application that stores up to 8 contacts with ADD, SEARCH,
 3. SEARCH: Displays formatted table, then shows full contact details
 4. EXIT: Terminates the program
 
-**Key Implementation Details:**
-
-```cpp
-// I used an array to store contacts (no vectors in C++98)
-private:
-    Contact _contacts[8];
-    int     _contactCount;
-    int     _oldestIndex;
-
-// Column formatting was tricky - I created a helper function
-std::string formatColumn(std::string str, int width)
-{
-    if (str.length() > width)
-        return str.substr(0, width - 1) + ".";
-    return str;
-}
-```
-
 **What I learned:**
 - How to design classes with private data and public interfaces
 - Encapsulation principles (keeping data private)
