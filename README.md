@@ -84,7 +84,15 @@ std::string capitalise_string(std::string string_to_capitalise)
 
 I created a phonebook application that stores up to 8 contacts with ADD, SEARCH, and EXIT commands.
 
+**Contact Class:**
+- see Contact.hpp and Contact.cpp
+- Stores individual contact information (first name, last name, nickname, phone, secret)
+- Private member variables with public getters/setters (introduction to const as well as the use of references for string getters)
+- Handles data validation and formatting
+
+**Contact Class Implementation:**
 **Class Structure:**
+
 ```cpp
 class Contact{
 	public:
@@ -114,15 +122,6 @@ class Contact{
 		std::string darkest_secret;
 };
 ```
-
-**Contact Class:**
-- see Contact.hpp and Contact.cpp
-- Stores individual contact information (first name, last name, nickname, phone, secret)
-- Private member variables with public getters/setters (introduction to const)
-- Handles data validation and formatting
-
-**Contact Class Implementation:**
-
 
 **PhoneBook Class:**
 - Manages an array of 8 Contact objects
